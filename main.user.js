@@ -20,7 +20,8 @@ handlers["https://mail.qq.com/cgi-bin/frame_html"] = function () {
 };
 
 handlers["https://www.zhihu.com"] = function () {
-  setInterval(function () {
+  var count = 0;
+  var interval = setInterval(function () {
     document.querySelectorAll(".external").forEach(function (aTag) {
       try {
         aTag.href = decodeURIComponent(
@@ -31,8 +32,11 @@ handlers["https://www.zhihu.com"] = function () {
         log(error);
       }
     });
-  }),
-    5000;
+    count += 1;
+    if (count >= 60) {
+      clearInterval(interval);
+    }
+  }, 1000);
 };
 
 for (var url in handlers) {
